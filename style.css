@@ -19,6 +19,7 @@ html, body, #map {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0 1px 7px rgba(0, 0, 0, 0.65);
+  margin-bottom: 10px;
 }
 
 .header h2 {
@@ -48,7 +49,7 @@ html, body, #map {
   box-shadow: 0 1px 7px rgba(0, 0, 0, 0.35);
   font-family: Arial, Helvetica, sans-serif;
 }
-#select-location {
+/* #select-location {
   outline: none;
   box-shadow: 0 1px 7px rgba(0, 0, 0, 0.65);
   background-color: white;
@@ -58,7 +59,7 @@ html, body, #map {
   font-size: 11px;
   padding: 2px;
   color: #76381a;
-}
+} */
 
 #slide {
   position: absolute;

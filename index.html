@@ -33,11 +33,12 @@
     <p>Descubre cómo se produce café de excelente calidad,
       y disfruta de las cataratas y bosques que rodean los cafetales.</p>
       <p>4 Fincas, 3 cataratas y 1 laguna</p>
-  </div>
+      <p>Has click en los círculos verdes para ver más.</p>
+    </div>
     <a href="index.html" class="home">Inicio</a>
-    <select name="select-location" id="select-location">
+    <!-- <select name="select-location" id="select-location">
       <option value="0">Selecciona uno</option>
-    </select>
+    </select> -->
   </div>
   <div id='slide'>
   <div class='slide-in'>
@@ -73,7 +74,8 @@ var map = L.map('map', {
     //center: new L.LatLng(-5.443126, -78.833394),
     //zoom: 10,
     zoomControl: false,
-    closePopupOnClick: false
+    closePopupOnClick: false,
+    scrollWheelZoom: false,
 });
 map.createPane('labels');
 // map.getPane('labels').style.zIndex = 500;
@@ -224,36 +226,36 @@ $(document).on('click','.close',function() {
     });
 
 // selector de atractivos
-mapardc.features.forEach(function(feature) {
-    if (feature.properties.descripcion === 'catarata' || feature.properties.descripcion === 'finca' || feature.properties.descripcion ==='laguna' ){
-        $('#select-location').append('<option value="'+feature.properties.name+'">'+feature.properties.name+'</option>');
-        }	
-});
+// mapardc.features.forEach(function(feature) {
+//     if (feature.properties.descripcion === 'catarata' || feature.properties.descripcion === 'finca' || feature.properties.descripcion ==='laguna' ){
+//         $('#select-location').append('<option value="'+feature.properties.name+'">'+feature.properties.name+'</option>');
+//         }	
+// });
 
-$(document).on('change','#select-location',function(e) {
-			var atractivo = e.target.value;
-			if(atractivo!==0) {
-				MapaRutaCafe.eachLayer(function(layer) {
-         if(layer.feature.properties.name===e.target.value){
-            layer.bindPopup(layer.feature.properties.name).openPopup() 
-            $('#slide').addClass('in');
-            $('#tituloAtractivo').html(layer.feature.properties.name);
-            $('#infoAtractivo').html(layer.feature.properties.resumen);
-            $('#actividadesAtractivo').html(layer.feature.properties.actividades);
-            $('#actividadesAtractivo').append('<a href=\'' + layer.feature.properties.link + '\' target=\'_blank\'>'+ ' Más info' +'</a>');
-            $('#carousel__slide1').html('<img src='+layer.feature.properties.image+'>');
-            $('#carousel__slide2').html('<img src='+layer.feature.properties.image1+'>');
-            $('#carousel__slide3').html('<img src='+layer.feature.properties.image2+'>');
-            var lat= layer.feature.geometry.coordinates[1]
-            var long= layer.feature.geometry.coordinates[0]
-            map.flyTo([lat,long],16,{
-              duration: 0.20
-            });
-          }
+// $(document).on('change','#select-location',function(e) {
+// 			var atractivo = e.target.value;
+// 			if(atractivo!==0) {
+// 				MapaRutaCafe.eachLayer(function(layer) {
+//          if(layer.feature.properties.name===e.target.value){
+//             layer.bindPopup(layer.feature.properties.name).openPopup() 
+//             $('#slide').addClass('in');
+//             $('#tituloAtractivo').html(layer.feature.properties.name);
+//             $('#infoAtractivo').html(layer.feature.properties.resumen);
+//             $('#actividadesAtractivo').html(layer.feature.properties.actividades);
+//             $('#actividadesAtractivo').append('<a href=\'' + layer.feature.properties.link + '\' target=\'_blank\'>'+ ' Más info' +'</a>');
+//             $('#carousel__slide1').html('<img src='+layer.feature.properties.image+'>');
+//             $('#carousel__slide2').html('<img src='+layer.feature.properties.image1+'>');
+//             $('#carousel__slide3').html('<img src='+layer.feature.properties.image2+'>');
+//             var lat= layer.feature.geometry.coordinates[1]
+//             var long= layer.feature.geometry.coordinates[0]
+//             map.flyTo([lat,long],16,{
+//               duration: 0.20
+//             });
+//           }
         
-        });
-      }
-    });
+//         });
+//       }
+//     });
     
 
 </script>
