@@ -76,6 +76,7 @@ var map = L.map('map', {
     zoomControl: false,
     closePopupOnClick: false,
     scrollWheelZoom: false,
+    dragging: !L.Browser.mobile,
 });
 map.createPane('labels');
 // map.getPane('labels').style.zIndex = 500;
