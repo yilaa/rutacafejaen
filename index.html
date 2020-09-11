@@ -24,6 +24,7 @@
 <script type="text/javascript" src="js/provincias.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+<script src="js/animation.js"></script>
 </head>
 
 <body>
@@ -36,15 +37,13 @@
       <p>Has click en los círculos verdes para ver más.</p>
     </div>
     <a href="index.html" class="home">Inicio</a>
-    <!-- <select name="select-location" id="select-location">
-      <option value="0">Selecciona uno</option>
-    </select> -->
   </div>
   <div id='slide'>
   <div class='slide-in'>
     <a class='close'>x</a>
     <h2 id="tituloAtractivo"></h2>
     <p id="infoAtractivo"></p>
+    <button id="boton" type="button">Mira cómo llegar</button>
     <p id="actividadesAtractivo"><a href="">Más info</a></p>
     <section class="carousel">
       <div class="carousel__container">
@@ -202,7 +201,7 @@ var MapaRutaCafe = L.geoJson(mapardc, {
 // clustering
 
 var markers = L.markerClusterGroup({
-  disableClusteringAtZoom: 16,
+  disableClusteringAtZoom: 15,
   spiderfyOnMaxZoom: false,
   showCoverageOnHover: false,
   });
@@ -219,45 +218,53 @@ map.on('layeradd', function(event) {
 map.fitBounds(provinciasRDC.getBounds());
 
 // slide-in ocultar
-$(document).on('click','.close',function() {
-			if($('#slide').hasClass('in')) {
+function cerrarslide () {
+  if($('#slide').hasClass('in')) {
         $('#slide').removeClass('in');
       };
       $('#select-location').val(0);
-    });
+}
 
-// selector de atractivos
-// mapardc.features.forEach(function(feature) {
-//     if (feature.properties.descripcion === 'catarata' || feature.properties.descripcion === 'finca' || feature.properties.descripcion ==='laguna' ){
-//         $('#select-location').append('<option value="'+feature.properties.name+'">'+feature.properties.name+'</option>');
-//         }	
-// });
+$(document).on('click','.close',function() {
+			cerrarslide()});
 
-// $(document).on('change','#select-location',function(e) {
-// 			var atractivo = e.target.value;
-// 			if(atractivo!==0) {
-// 				MapaRutaCafe.eachLayer(function(layer) {
-//          if(layer.feature.properties.name===e.target.value){
-//             layer.bindPopup(layer.feature.properties.name).openPopup() 
-//             $('#slide').addClass('in');
-//             $('#tituloAtractivo').html(layer.feature.properties.name);
-//             $('#infoAtractivo').html(layer.feature.properties.resumen);
-//             $('#actividadesAtractivo').html(layer.feature.properties.actividades);
-//             $('#actividadesAtractivo').append('<a href=\'' + layer.feature.properties.link + '\' target=\'_blank\'>'+ ' Más info' +'</a>');
-//             $('#carousel__slide1').html('<img src='+layer.feature.properties.image+'>');
-//             $('#carousel__slide2').html('<img src='+layer.feature.properties.image1+'>');
-//             $('#carousel__slide3').html('<img src='+layer.feature.properties.image2+'>');
-//             var lat= layer.feature.geometry.coordinates[1]
-//             var long= layer.feature.geometry.coordinates[0]
-//             map.flyTo([lat,long],16,{
-//               duration: 0.20
-//             });
-//           }
-        
-//         });
-//       }
-//     });
-    
+//Como llegar
+function comollegar () {
+  fetch ('js/rutalaguna.js',{
+  method:'GET'
+  })
+  .then(response =>response.json())
+  .then(json => {
+  var rutas = L.geoJson(json, {
+    style: function (feature) {
+      return {color: "#76381a"}
+      },
+    onEachFeature: function (feature,layer) {
+      layer.bindPopup(feature.properties.descripcion + '<br/>' + '<a class="cerrar">cerrar</a>')
+    }
+  })
+  var titulo =document.getElementById('tituloAtractivo').innerHTML
+  rutas.eachLayer(function(layer){
+    if(layer.feature.properties.name===titulo) {
+      cerrarslide ()
+      //map.zoomOut(5)
+      map.fitBounds(layer.getBounds())
+      layer.addTo(map)
+      layer.snakeIn()
+      layer.openPopup()
+      $('#map').on('click', '.cerrar', function(){
+      layer.removeFrom(map)
+    })
+    }
+  })
+  })
+  .catch(error => console.log(error.message))   
+}
+document.getElementById('boton').onclick = function (){
+  comollegar ()
+}
+
+
 
 </script>
 
