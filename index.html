@@ -43,7 +43,7 @@
     <a class='close'>x</a>
     <h2 id="tituloAtractivo"></h2>
     <p id="infoAtractivo"></p>
-    <button id="boton" type="button">Mira cómo llegar</button>
+    <!-- <button id="boton" type="button">Mira cómo llegar</button> -->
     <p id="actividadesAtractivo"><a href="">Más info</a></p>
     <section class="carousel">
       <div class="carousel__container">
@@ -229,40 +229,40 @@ $(document).on('click','.close',function() {
 			cerrarslide()});
 
 //Como llegar
-function comollegar () {
-  fetch ('js/rutalaguna.js',{
-  method:'GET'
-  })
-  .then(response =>response.json())
-  .then(json => {
-  var rutas = L.geoJson(json, {
-    style: function (feature) {
-      return {color: "#76381a"}
-      },
-    onEachFeature: function (feature,layer) {
-      layer.bindPopup(feature.properties.descripcion + '<br/>' + '<a class="cerrar">cerrar</a>')
-    }
-  })
-  var titulo =document.getElementById('tituloAtractivo').innerHTML
-  rutas.eachLayer(function(layer){
-    if(layer.feature.properties.name===titulo) {
-      cerrarslide ()
-      //map.zoomOut(5)
-      map.fitBounds(layer.getBounds())
-      layer.addTo(map)
-      layer.snakeIn()
-      layer.openPopup()
-      $('#map').on('click', '.cerrar', function(){
-      layer.removeFrom(map)
-    })
-    }
-  })
-  })
-  .catch(error => console.log(error.message))   
-}
-document.getElementById('boton').onclick = function (){
-  comollegar ()
-}
+// function comollegar () {
+//   fetch ('js/rutalaguna.js',{
+//   method:'GET'
+//   })
+//   .then(response =>response.json())
+//   .then(json => {
+//   var rutas = L.geoJson(json, {
+//     style: function (feature) {
+//       return {color: "#76381a"}
+//       },
+//     onEachFeature: function (feature,layer) {
+//       layer.bindPopup(feature.properties.descripcion + '<br/>' + '<a class="cerrar">cerrar</a>')
+//     }
+//   })
+//   var titulo =document.getElementById('tituloAtractivo').innerHTML
+//   rutas.eachLayer(function(layer){
+//     if(layer.feature.properties.name===titulo) {
+//       cerrarslide ()
+//       //map.zoomOut(5)
+//       map.fitBounds(layer.getBounds())
+//       layer.addTo(map)
+//       layer.snakeIn()
+//       layer.openPopup()
+//       $('#map').on('click', '.cerrar', function(){
+//       layer.removeFrom(map)
+//     })
+//     }
+//   })
+//   })
+//   .catch(error => console.log(error.message))   
+// }
+// document.getElementById('boton').onclick = function (){
+//   comollegar ()
+// }
 
 
 
