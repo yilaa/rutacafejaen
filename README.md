@@ -1,6 +1,6 @@
 # Ruta Cafe Jaén San Ignacio
-Mapa de la Ruta del Café Jaén San Ignacio en Cajamarca
-Turismo
-Qué visitar y qué ver en la Ruta del Café
+Mapa de la Ruta del Café Jaén San Ignacio en Cajamarca  
+### Turismo
+Qué visitar y Qué ver en la Ruta del Café
 
-https://yilaa.github.io/rutacafejaen/
+Ver demo:   https://yilaa.github.io/rutacafejaen/
